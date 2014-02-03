@@ -30,6 +30,8 @@ nmap <Leader>a: :Tabularize /:\zs<CR>
 vmap <Leader>a: :Tabularize /:\zs<CR>
 let g:rspec_command = "MakeGreen {spec}"
 let g:HammerQuiet=1
+" Show 80 column line
+set colorcolumn=80
 " Whitespace stuff
 set wrap
 set scrolloff=3
@@ -128,6 +130,8 @@ vmap <C-J> ]egv
 
 " Enable syntastic syntax checking
 let g:syntastic_enable_signs=1
+
+let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 
 " gist-vim defaults
 if has("mac")
