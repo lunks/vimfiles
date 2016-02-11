@@ -10,7 +10,6 @@ set nonumber
 set ruler
 syntax on
 set encoding=utf-8
-"let g:html_indent_inctags = "body,head,tbody,ul,li,p,script"
 let g:html_indent_style1 = "inc"
 let g:html_indent_script1 = "inc"
 set hidden
@@ -27,8 +26,6 @@ nmap <Leader>a: :Tabularize /:\zs<CR>
 vmap <Leader>a: :Tabularize /:\zs<CR>
 nmap <Leader>a<Leader> :Tabularize /,\zs<CR>
 vmap <Leader>a<Leader> :Tabularize /,\zs<CR>
-let g:rspec_runner = "os_x_iterm"
-let g:rspec_command = "Dispatch! bundle exec rspec {spec}"
 let g:HammerQuiet=1
 " Show 80 column line
 set colorcolumn=80
@@ -183,11 +180,8 @@ if has("mouse")
   set mouse=a
 endif
 
-"map <Leader>o :call RunCurrentLineInTest()<CR>
-"map <Leader>p :call RunCurrentTest()<CR>
 map <Leader>d obinding.pry<esc>:w<cr>
 map <Leader>gs :Gstatus<CR>
-map <Leader>f :call OpenFactoryFile()<CR>
 map <Leader>gc :Gcommit -m ""<LEFT>
 let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;vendor/**;coverage/**;tmp/**;rdoc/**"
 set shiftround " When at 3 spaces and I hit >>, go to 4, not 5.
@@ -225,13 +219,7 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 " Clean search
 map //  :nohlsearch<CR>
 
-map <Leader>R :call RunCurrentSpecFile()<CR>
-map <Leader>r :call RunNearestSpec()<CR>
-map <Leader>rr :call RunLastSpec()<CR>
-
 let g:ycm_seed_identifiers_with_syntax = 1
-
-
 
 " easier redo
 noremap U <C-r>
@@ -244,12 +232,6 @@ nnoremap <silent> <leader>= mmgg=G`m
 nmap sj :SplitjoinSplit<cr>
 nmap sk :SplitjoinJoin<cr>
 nmap <Leader>a :Ag<space>
-function! PasteAsCoffee()
-  :read !pbpaste | /usr/local/share/npm/bin/js2coffee
-endfunction
 
-:command! PasteAsCoffee :call PasteAsCoffee()
-:map <leader>pc :PasteAsCoffee<CR>
 
 let g:used_javascript_libs = 'underscore,backbone,jquery'
-au BufNewFile,BufRead *.emblem set filetype=slim
