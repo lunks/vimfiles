@@ -17,7 +17,7 @@ set hidden
 let mapleader = ","
 set cursorline
 set history=1000
-set timeoutlen=250
+set timeoutlen=500
 set viminfo='100,f1
 highlight RSpecFailed guibg=#671d1a
 autocmd BufNewFile,BufRead *_spec.rb compiler rspec
