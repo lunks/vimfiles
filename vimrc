@@ -195,26 +195,6 @@ set nofoldenable " Say no to code folding...
 set formatoptions-=or
 au BufWritePre *.rb :%s/\s\+$//e
 
-function! OpenFactoryFile()
-  if filereadable("test/factories.rb")
-    execute ":sp test/factories.rb"
-  else
-    execute ":sp spec/factories.rb"
-  end
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RENAME CURRENT FILE (thanks Gary Bernhardt) modified to use gitmove
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! RenameFile()
-  let old_name = expand('%')
-  let new_name = input('New file name: ', expand('%'), 'file')
-  if new_name != '' && new_name != old_name
-    exec ':Gmove ' . new_name
-  endif
-endfunction
-map <leader>n :call RenameFile()<cr>
-
 let delimitMate_expand_space = 1
 nnoremap - :Switch<cr>
 let g:ctrlp_switch_buffer = 'ET'
