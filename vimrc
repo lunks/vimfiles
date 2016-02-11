@@ -49,6 +49,12 @@ set smartcase
 set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,test/fixtures/*,vendor/gems/*,tags
 
+" Focus current split
+set winwidth=999
+set winheight=5
+set winminheight=5
+set winminwidth=80
+
 " Disable arrow keys
 inoremap  <Up>     <NOP>
 inoremap  <Down>   <NOP>
