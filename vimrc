@@ -2,8 +2,6 @@ set nocompatible
 filetype off
 
 set clipboard=unnamed
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
 
 so ~/.vim/bundle.vim
 
@@ -22,13 +20,15 @@ set history=1000
 set timeoutlen=250
 set viminfo='100,f1
 highlight RSpecFailed guibg=#671d1a
-map <Leader>] :call MakeGreen()<CR>
 autocmd BufNewFile,BufRead *_spec.rb compiler rspec
 nmap <Leader>a= :Tabularize /=<CR>
 vmap <Leader>a= :Tabularize /=<CR>
 nmap <Leader>a: :Tabularize /:\zs<CR>
 vmap <Leader>a: :Tabularize /:\zs<CR>
-let g:rspec_command = "MakeGreen {spec}"
+nmap <Leader>a<Leader> :Tabularize /,\zs<CR>
+vmap <Leader>a<Leader> :Tabularize /,\zs<CR>
+let g:rspec_runner = "os_x_iterm"
+let g:rspec_command = "Dispatch! bundle exec rspec {spec}"
 let g:HammerQuiet=1
 " Show 80 column line
 set colorcolumn=80
@@ -111,7 +111,6 @@ set backspace=indent,eol,start
 
 filetype plugin indent on
 set fdl=999
-au! BufRead,BufNewFile *.json set filetype=json foldmethod=syntax
 " Opens an edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>e
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -132,6 +131,8 @@ vmap <C-J> ]egv
 let g:syntastic_enable_signs=1
 
 let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_css_checkers = ['scss_lint']
 
 " gist-vim defaults
 if has("mac")
@@ -219,6 +220,7 @@ let delimitMate_expand_space = 1
 nnoremap - :Switch<cr>
 let g:ctrlp_switch_buffer = 'ET'
 let g:ctrlp_mruf_relative = 1
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 " Insert CRs with ease
 " nmap <Return> o<Esc>
 " Clean search
@@ -249,4 +251,6 @@ endfunction
 
 :command! PasteAsCoffee :call PasteAsCoffee()
 :map <leader>pc :PasteAsCoffee<CR>
-let g:PreserveNoEOL = 1
+
+let g:used_javascript_libs = 'underscore,backbone,jquery'
+au BufNewFile,BufRead *.emblem set filetype=slim
