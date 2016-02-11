@@ -115,8 +115,7 @@ set fdl=999
 " Normal mode: <Leader>e
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-" Generate CTags for every gem included in the Gemfile.
-map <silent> <Leader>rt :!bundle list --paths=true \| xargs ctags --extra=+f --exclude=.git --exclude=log -R *<CR><CR>
+map <silent> <Leader>rt :!ctags --languages=ruby,javascript --extra=+f --exclude=.git --exclude=log -R *<CR><CR>
 
 " Unimpaired configuration
 " Bubble single lines
