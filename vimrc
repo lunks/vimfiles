@@ -129,12 +129,8 @@ vmap <C-K> [egv
 vmap <C-J> ]egv
 
 
-" Enable syntastic syntax checking
-let g:syntastic_enable_signs=1
-
-let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-let g:syntastic_scss_checkers = ['scss_lint']
-let g:syntastic_css_checkers = ['scss_lint']
+autocmd! BufWritePost * Neomake
+autocmd! BufReadPost * Neomake
 
 " gist-vim defaults
 if has("mac")
@@ -166,6 +162,8 @@ set directory=~/.vim/backup
 " Default color scheme
 
 set background=dark
+set ttyfast                " Faster redrawing.
+set lazyredraw             " Only redraw when necessary.
 
 " Detect if we're running a 256 colors terminals
 " PuTTY - putty-256color
@@ -199,7 +197,7 @@ let delimitMate_expand_space = 1
 nnoremap - :Switch<cr>
 let g:ctrlp_switch_buffer = 'ET'
 let g:ctrlp_mruf_relative = 1
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g "" --ignore .git --ignore .DS_Store --smart-case -m 1'
 " Insert CRs with ease
 " nmap <Return> o<Esc>
 " Clean search
@@ -221,3 +219,31 @@ nmap <Leader>a :Ag<space>
 
 let g:used_javascript_libs = 'underscore,angularjs,angularuirouter,angularui,requirejs,jasmine,jquery'
 
+let g:neoterm_position = 'horizontal'
+
+" run set test lib
+nnoremap <silent> ,R :call neoterm#test#run('file')<cr>
+nnoremap <silent> ,rn :call neoterm#test#run('current')<cr>
+nnoremap <silent> ,rr :call neoterm#test#rerun()<cr>
+nnoremap <silent> ,rc :call neoterm#close()<cr>
+let g:neoterm_rspec_lib_cmd = 'bin/rspec'
+let g:deoplete#enable_at_startup = 1
+let g:neomake_warning_sign = {
+        \ 'text': '✽',
+        \ 'texthl': 'WarningMsg',
+        \ }
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+let g:deoplete#omni#input_patterns = {}
+let g:deoplete#omni#input_patterns.ruby =
+      \ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
+let g:deoplete#sources = {}
+		let g:deoplete#sources.ruby = ['buffer', 'tag']
