@@ -219,5 +219,5 @@ nmap sj :SplitjoinSplit<cr>
 nmap sk :SplitjoinJoin<cr>
 nmap <Leader>a :Ag<space>
 
+let g:used_javascript_libs = 'underscore,angularjs,angularuirouter,angularui,requirejs,jasmine,jquery'
 
-let g:used_javascript_libs = 'underscore,backbone,jquery'
