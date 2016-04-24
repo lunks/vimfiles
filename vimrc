@@ -1,14 +1,9 @@
-set nocompatible
-filetype off
-
 set clipboard=unnamed
 
 so ~/.vim/bundle.vim
 
-filetype plugin indent on
 set nonumber
 set ruler
-syntax on
 set encoding=utf-8
 let g:html_indent_style1 = "inc"
 let g:html_indent_script1 = "inc"
@@ -110,9 +105,6 @@ au FileType python  set tabstop=4 textwidth=79
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-" load the plugin and indent settings for the detected filetype
-
-filetype plugin indent on
 set fdl=999
 " Opens an edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>e
@@ -146,7 +138,6 @@ let g:github_user = 'lunks'
 " toggle between last open buffers
 nnoremap <leader><leader> <c-^>
 
-map <leader>t :CtrlP<cr>
 map <leader>g :Gstatus<cr>
 " Presing jj get back to normal mode
 inoremap jj <esc>
@@ -227,23 +218,22 @@ nnoremap <silent> ,rn :call neoterm#test#run('current')<cr>
 nnoremap <silent> ,rr :call neoterm#test#rerun()<cr>
 nnoremap <silent> ,rc :call neoterm#close()<cr>
 let g:neoterm_rspec_lib_cmd = 'bin/rspec'
-let g:deoplete#enable_at_startup = 1
-let g:neomake_warning_sign = {
-        \ 'text': '✽',
-        \ 'texthl': 'WarningMsg',
-        \ }
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+map <leader>t :Files<cr>
+map <leader>b :Buffers<cr>
 
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-let g:deoplete#omni#input_patterns = {}
-let g:deoplete#omni#input_patterns.ruby =
-      \ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
-let g:deoplete#sources = {}
-		let g:deoplete#sources.ruby = ['buffer', 'tag']
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:neomake_elixir_enabled_makers = []
+
+let g:polyglot_disabled = ['javascript', 'json']
