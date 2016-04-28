@@ -156,19 +156,7 @@ set background=dark
 set ttyfast                " Faster redrawing.
 set lazyredraw             " Only redraw when necessary.
 
-" Detect if we're running a 256 colors terminals
-" PuTTY - putty-256color
-" rxvt - rxvt-256color
-" Eterm - Eterm-256color
-" Konsole - konsole-256color
-" XFCE's Terminal - gnome-256color
-" more details here : http://vim.wikia.com/wiki/256_colors_in_vim
-set t_Co=256
-if matchstr(&t_Co, '256')
-  color tomorrow-night
-else
-  color desert
-endif
+color tomorrow-night
 
 command Todo Ack TODO
 if has("mouse")

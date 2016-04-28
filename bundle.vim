@@ -22,7 +22,6 @@ Plug 'tpope/vim-rake'
 Plug 'tpope/vim-surround'
 Plug 'AndrewRadev/switch.vim'
 Plug 'godlygeek/tabular'
-Plug 'jlangston/tomorrow-night-vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user'
@@ -47,7 +46,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'esneider/YUNOcommit.vim'
 Plug 'othree/es.next.syntax.vim'
-Plug 'sheerun/vim-polyglot'
+Plug 'lunks/vim-polyglot'
 Plug 'othree/es.next.syntax.vim'
+Plug 'lunks/tomorrow-night.vim'
+Plug 'wakatime/vim-wakatime'
 call plug#end()
 
