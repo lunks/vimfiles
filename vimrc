@@ -138,7 +138,6 @@ let g:github_user = 'lunks'
 " toggle between last open buffers
 nnoremap <leader><leader> <c-^>
 
-map <leader>g :Gstatus<cr>
 " Presing jj get back to normal mode
 inoremap jj <esc>
 inoremap jk <esc>
@@ -149,14 +148,14 @@ nnoremap R "_d
 " Directories for swp files
 set backupdir=~/.vim/backup
 set directory=~/.vim/backup
-
+set termguicolors
 " Default color scheme
-
-set background=dark
 set ttyfast                " Faster redrawing.
 set lazyredraw             " Only redraw when necessary.
 
-color tomorrow-night
+set background=dark
+let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+colorscheme gruvbox
 
 command Todo Ack TODO
 if has("mouse")
@@ -225,3 +224,4 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:neomake_elixir_enabled_makers = []
 
 let g:polyglot_disabled = ['javascript', 'json']
+let g:jsx_ext_required = 0

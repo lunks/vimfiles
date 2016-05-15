@@ -32,13 +32,12 @@ Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'tpope/vim-bundler'
-Plug 'othree/yajs.vim', { 'for': 'javascript' }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'mmozuras/vim-github-comment'
 Plug 'kablamo/vim-git-log'
-Plug 'benekastah/neomake'
+Plug 'neomake/neomake'
 Plug 'kassio/neoterm'
 Plug 'osyo-manga/vim-monster'
 Plug 'rhysd/committia.vim'
@@ -50,5 +49,6 @@ Plug 'lunks/vim-polyglot'
 Plug 'othree/es.next.syntax.vim'
 Plug 'lunks/tomorrow-night.vim'
 Plug 'wakatime/vim-wakatime'
+Plug 'morhetz/gruvbox'
 call plug#end()
 
