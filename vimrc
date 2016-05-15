@@ -225,3 +225,4 @@ let g:neomake_elixir_enabled_makers = []
 
 let g:polyglot_disabled = ['javascript', 'json']
 let g:jsx_ext_required = 0
+let g:indent_guides_guide_size = 1
