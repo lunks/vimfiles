@@ -73,6 +73,7 @@ set shell=bash
 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Guardfile,Procfile,config.ru}    set ft=ruby
+au BufRead,BufNewFile {*.es6}   set ft=javascript
 
 " Recognize .int as yaml
 au BufRead,BufNewFile {.int}    set ft=yaml
