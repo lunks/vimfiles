@@ -51,5 +51,6 @@ Plug 'lunks/tomorrow-night.vim'
 Plug 'wakatime/vim-wakatime'
 Plug 'morhetz/gruvbox'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'metakirby5/codi.vim'
 call plug#end()
 
