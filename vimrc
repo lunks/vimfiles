@@ -47,8 +47,8 @@ set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,test/fixtures/*,vendor/gems/*,
 " Focus current split
 set winwidth=999
 set winheight=5
-set winminheight=5
-set winminwidth=80
+" set winminheight=5
+" set winminwidth=80
 
 " Disable arrow keys
 inoremap  <Up>     <NOP>
@@ -212,6 +212,16 @@ xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 map <leader>t :Files<cr>
 map <leader>b :Buffers<cr>
+
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
