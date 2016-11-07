@@ -201,11 +201,10 @@ let g:used_javascript_libs = 'underscore,angularjs,angularuirouter,angularui,req
 let g:neoterm_position = 'horizontal'
 
 " run set test lib
-nnoremap <silent> ,R :call neoterm#test#run('file')<cr>
-nnoremap <silent> ,rn :call neoterm#test#run('current')<cr>
-nnoremap <silent> ,rr :call neoterm#test#rerun()<cr>
-nnoremap <silent> ,rc :call neoterm#close()<cr>
-let g:neoterm_rspec_lib_cmd = 'bin/rspec'
+map <Leader>R :call RunCurrentSpecFile()<CR>
+map <Leader>rn :call RunNearestSpec()<CR>
+map <Leader>rr :call RunLastSpec()<CR>
+let g:rspec_command = "Tmux rspec {spec}"
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
@@ -237,6 +236,6 @@ let g:neomake_elixir_enabled_makers = []
 let g:polyglot_disabled = ['javascript', 'json']
 let g:jsx_ext_required = 0
 let g:indent_guides_guide_size = 1
-
+let g:tslime_always_current_session = 1
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
