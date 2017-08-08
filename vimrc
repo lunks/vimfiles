@@ -1,7 +1,8 @@
 set clipboard=unnamed
 
 so ~/.vim/bundle.vim
-
+let g:python_host_prog = '/Users/lunks/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/lunks/.pyenv/versions/neovim3/bin/python'
 set nonumber
 set ruler
 set encoding=utf-8
@@ -74,6 +75,7 @@ set shell=bash
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Guardfile,Procfile,config.ru}    set ft=ruby
 au BufRead,BufNewFile {*.es6}   set ft=javascript
+au BufRead,BufNewFile {.babelrc}   set ft=json
 
 " Recognize .int as yaml
 au BufRead,BufNewFile {.int}    set ft=yaml
@@ -121,9 +123,6 @@ nmap <C-J> ]e
 vmap <C-K> [egv
 vmap <C-J> ]egv
 
-
-autocmd! BufWritePost * Neomake
-autocmd! BufReadPost * Neomake
 
 " gist-vim defaults
 if has("mac")
@@ -231,7 +230,6 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:neomake_elixir_enabled_makers = []
 
 let g:polyglot_disabled = ['javascript', 'json']
 let g:jsx_ext_required = 0
@@ -239,3 +237,12 @@ let g:indent_guides_guide_size = 1
 let g:tslime_always_current_session = 1
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
+let g:ale_fixers = {}
+let g:ale_fixers.javascript = ['eslint']
+let g:ale_fixers.ruby = ['rubocop']
+let g:ale_fix_on_save = 1
+let g:airline#extensions#ale#enabled = 1
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+hi def link ALEErrorSign GruvboxRedSign
+hi def link ALEWarningSign GruvboxYellowSign
