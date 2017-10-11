@@ -244,5 +244,7 @@ let g:ale_fix_on_save = 1
 let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
-hi def link ALEErrorSign GruvboxRedSign
-hi def link ALEWarningSign GruvboxYellowSign
+
+let g:ale_pattern_options = {'schema\.rb$': {'ale_enabled': 0, 'ale_fixers': {}}}
+"hi def link ALEErrorSign GruvboxRedSign
+"hi def link ALEWarningSign GruvboxYellowSign

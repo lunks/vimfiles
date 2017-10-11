@@ -61,5 +61,6 @@ Plug 'janko-m/vim-test'
 Plug 'aliou/sql-heredoc.vim'
 Plug 'w0rp/ale'
 Plug 'jparise/vim-graphql'
+Plug 'tpope/vim-rhubarb'
 call plug#end()
 
