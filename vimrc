@@ -1,8 +1,6 @@
 set clipboard=unnamed
 
 so ~/.vim/bundle.vim
-let g:python_host_prog = '/Users/lunks/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/Users/lunks/.pyenv/versions/neovim3/bin/python'
 set nonumber
 set ruler
 set encoding=utf-8
@@ -61,6 +59,8 @@ noremap   <Down>   <NOP>
 noremap   <Left>   <NOP>
 noremap   <Right>  <NOP>
 
+
+set guifont=Fira\ Code:h24
 " make uses real tabs
 au FileType make 	set noexpandtab
 
@@ -76,6 +76,7 @@ set shell=bash
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Guardfile,Procfile,config.ru}    set ft=ruby
 au BufRead,BufNewFile {*.es6}   set ft=javascript
 au BufRead,BufNewFile {.babelrc}   set ft=json
+au BufRead,BufNewFile {*.zsh-theme}   set ft=zsh
 
 " Recognize .int as yaml
 au BufRead,BufNewFile {.int}    set ft=yaml
@@ -124,6 +125,11 @@ vmap <C-K> [egv
 vmap <C-J> ]egv
 
 
+if has("pythonx")
+  set pyx=3
+  set pyxversion=3
+endif
+
 " gist-vim defaults
 if has("mac")
   let g:gist_clip_command = 'pbcopy'
@@ -134,9 +140,6 @@ let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
 let g:github_user = 'lunks'
 
-
-" toggle between last open buffers
-nnoremap <leader><leader> <c-^>
 
 " Presing jj get back to normal mode
 inoremap jj <esc>
@@ -155,14 +158,16 @@ set lazyredraw             " Only redraw when necessary.
 
 set background=dark
 let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-colorscheme gruvbox
+let g:nord_underline = 1
+let g:nord_uniform_status_lines = 1
+let g:nord_comment_brightness = 20
+colorscheme lucario
 
 command Todo Ack TODO
 if has("mouse")
   set mouse=a
 endif
 
-map <Leader>d obinding.pry<esc>:w<cr>
 map <Leader>gs :Gstatus<CR>
 map <Leader>gc :Gcommit -m ""<LEFT>
 let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;vendor/**;coverage/**;tmp/**;rdoc/**"
@@ -171,13 +176,7 @@ set nofoldenable " Say no to code folding...
 set formatoptions-=or
 au BufWritePre *.rb :%s/\s\+$//e
 
-let delimitMate_expand_space = 1
 nnoremap - :Switch<cr>
-let g:ctrlp_switch_buffer = 'ET'
-let g:ctrlp_mruf_relative = 1
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g "" --ignore .git --ignore .DS_Store --smart-case -m 1'
-" Insert CRs with ease
-" nmap <Return> o<Esc>
 " Clean search
 map //  :nohlsearch<CR>
 
@@ -195,15 +194,13 @@ nmap sj :SplitjoinSplit<cr>
 nmap sk :SplitjoinJoin<cr>
 nmap <Leader>a :Ag<space>
 
-let g:used_javascript_libs = 'underscore,angularjs,angularuirouter,angularui,requirejs,jasmine,jquery'
-
-let g:neoterm_position = 'horizontal'
+let g:used_javascript_libs = 'underscore,react,ramda'
 
 " run set test lib
-map <Leader>R :call RunCurrentSpecFile()<CR>
-map <Leader>rn :call RunNearestSpec()<CR>
-map <Leader>rr :call RunLastSpec()<CR>
-let g:rspec_command = "Tmux rspec {spec}"
+map <Leader>R :TestFile<CR>
+map <Leader>rn :TestNearest<CR>
+map <Leader>rr :TestLast<CR>
+let test#strategy = "dispatch"
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
@@ -221,17 +218,7 @@ endfunction
 
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-let g:polyglot_disabled = ['javascript', 'json']
+let g:polyglot_disabled = ['json']
 let g:jsx_ext_required = 0
 let g:indent_guides_guide_size = 1
 let g:tslime_always_current_session = 1
@@ -239,12 +226,86 @@ noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 let g:ale_fixers = {}
 let g:ale_fixers.javascript = ['eslint']
+let g:ale_javascript_eslint_executable = 'eslint_d'
+let g:ale_fixers.typescript = ['tslint']
 let g:ale_fixers.ruby = ['rubocop']
 let g:ale_fix_on_save = 1
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
-
 let g:ale_pattern_options = {'schema\.rb$': {'ale_enabled': 0, 'ale_fixers': {}}}
-"hi def link ALEErrorSign GruvboxRedSign
-"hi def link ALEWarningSign GruvboxYellowSign
+command S Subvert
+" Autocomplete
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+set shortmess+=c
+inoremap <c-c> <ESC>
+
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+function! LspMaybeHover(is_running) abort
+  if a:is_running.result && g:LanguageClient_autoHoverAndHighlightStatus
+    call LanguageClient_textDocument_hover()
+  endif
+endfunction
+
+function! LspMaybeHighlight(is_running) abort
+  if a:is_running.result && g:LanguageClient_autoHoverAndHighlightStatus
+    call LanguageClient#textDocument_documentHighlight()
+  endif
+endfunction
+
+augroup lsp_aucommands
+  au!
+  "au CursorHold * call LanguageClient#isAlive(function('LspMaybeHover'))
+  au CursorMoved * call LanguageClient#isAlive(function('LspMaybeHighlight'))
+augroup END
+
+let g:LanguageClient_loggingFile = "/tmp/lunks.log"
+
+let g:LanguageClient_autoHoverAndHighlightStatus = 0
+
+function! ToggleLspAutoHoverAndHilight() abort
+  if g:LanguageClient_autoHoverAndHighlightStatus
+    let g:LanguageClient_autoHoverAndHighlightStatus = 0
+    call LanguageClient#clearDocumentHighlight()
+    echo ""
+  else
+    let g:LanguageClient_autoHoverAndHighlightStatus = 1
+  end
+endfunction
+nnoremap <silent> ;tg  :call ToggleLspAutoHoverAndHilight()<CR>
+
+let g:LanguageClient_serverCommands = {
+  \ 'javascript.jsx': ['javascript-typescript-stdio']
+  \ }
+nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
+nnoremap <silent> <leader>la :call LanguageClient#textDocument_codeAction()<CR>
+nnoremap <silent> <leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
+nnoremap <silent> <leader>lS :call LanguageClient#workspace_symbol()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+let g:LanguageClient_completionPreferTextEdit = 1
+" c-j c-k for moving in snippet
+imap <expr> <c-u> ncm2_ultisnips#expand_or("\<Plug>(ultisnips_expand)", 'm')
+smap <c-u> <Plug>(ultisnips_expand)
+let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
+
+augroup LanguageClient_config
+  autocmd!
+  autocmd User LanguageClientStarted echo "LC started!"
+  autocmd User LanguageClientStopped echo "LC stopped!"
+augroup END
+
+map <leader>rc :silent !tmux send-keys -t bottom C-c<CR>
+
+set titlestring=%t
+set title
