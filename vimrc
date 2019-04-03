@@ -73,7 +73,7 @@ set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{exists('g:loaded_rvm')?rvm#statusline(
 set shell=bash
 
 " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Guardfile,Procfile,config.ru}    set ft=ruby
+au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Guardfile,Procfile,config.ru,Fastfile}    set ft=ruby
 au BufRead,BufNewFile {*.es6}   set ft=javascript
 au BufRead,BufNewFile {.babelrc}   set ft=json
 au BufRead,BufNewFile {*.zsh-theme}   set ft=zsh
@@ -283,7 +283,9 @@ endfunction
 nnoremap <silent> ;tg  :call ToggleLspAutoHoverAndHilight()<CR>
 
 let g:LanguageClient_serverCommands = {
-  \ 'javascript.jsx': ['javascript-typescript-stdio']
+  \ 'javascript.jsx': ['javascript-typescript-stdio'],
+  \ 'typescript.jsx': ['javascript-typescript-stdio'],
+  \ 'typescript': ['javascript-typescript-stdio']
   \ }
 nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent> <leader>la :call LanguageClient#textDocument_codeAction()<CR>
@@ -309,3 +311,16 @@ map <leader>rc :silent !tmux send-keys -t bottom C-c<CR>
 
 set titlestring=%t
 set title
+" vim -b : edit binary using xxd-format!
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &bin=1
+  au BufReadPost *.bin if &bin | %!xxd
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &bin | %!xxd
+  au BufWritePost *.bin set nomod | endif
+augroup END
+:set wildoptions=pum
+:set pumblend=20
