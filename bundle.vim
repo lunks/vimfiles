@@ -61,4 +61,5 @@ Plug 'tpope/vim-abolish'
 " Auto complete stuff
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'honza/vim-snippets'
 call plug#end()

@@ -64,10 +64,9 @@ set guifont=Fira\ Code:h24
 " make uses real tabs
 au FileType make 	set noexpandtab
 
+>
 " Status bar
 set laststatus=2
-" set statusline=%<%f\ %h%m%r%%=%-14.(%l,%c%V%)\ %P
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{exists('g:loaded_rvm')?rvm#statusline():''}%{fugitive#statusline()}%=%-16(\ %l,%c-%v\ %)%P
 
 " Fix issues with the shell and fugitive
 set shell=bash
@@ -100,13 +99,19 @@ endfunction
 
 " md, markdown, and mk are markdown and define buffer-local preview
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
-
 au BufRead,BufNewFile *.txt call s:setupWrapping()
 
 " make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 au FileType python  set tabstop=4 textwidth=79
-
 au FileType groovy  set tabstop=4 softtabstop=4 expandtab shiftwidth=4
+
+augroup Javascript
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -271,10 +276,31 @@ augroup Binary
   au BufWritePost *.bin if &bin | %!xxd
   au BufWritePost *.bin set nomod | endif
 augroup END
-:set wildoptions=pum
-:set pumblend=20
+
+set wildoptions=pum
+set pumblend=20
 
 nnoremap <leader>f :CocAction<CR>
-nnoremap [w :ALEPreviousWrap<CR>
-nnoremap ]w :ALENextWrap<CR>
-nmap gd <Plug>(coc-definition) 
+nmap <silent> [w <Plug>(coc-diagnostic-prev)
+nmap <silent> ]w <Plug>(coc-diagnostic-next)
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+set cmdheight=2
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>qf  <Plug>(coc-fix-current)
