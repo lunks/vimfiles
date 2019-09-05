@@ -1,16 +1,11 @@
 call plug#begin('~/.vim/bundle')
 Plug 'junegunn/vim-plug'
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
 Plug 'rking/ag.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'Raimondi/delimitMate'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/webapi-vim'
@@ -64,13 +59,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-abolish'
 " Auto complete stuff
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'ncm2/ncm2-github'
-Plug 'SirVer/ultisnips'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
-

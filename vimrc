@@ -106,6 +106,8 @@ au BufRead,BufNewFile *.txt call s:setupWrapping()
 " make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 au FileType python  set tabstop=4 textwidth=79
 
+au FileType groovy  set tabstop=4 softtabstop=4 expandtab shiftwidth=4
+
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
@@ -157,11 +159,8 @@ set ttyfast                " Faster redrawing.
 set lazyredraw             " Only redraw when necessary.
 
 set background=dark
-let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-let g:nord_underline = 1
-let g:nord_uniform_status_lines = 1
-let g:nord_comment_brightness = 20
-colorscheme lucario
+colorscheme gruvbox8
+let g:airline_theme = 'gruvbox'
 
 command Todo Ack TODO
 if has("mouse")
@@ -232,12 +231,9 @@ let g:ale_fixers.ruby = ['rubocop']
 let g:ale_fix_on_save = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '⚠'
 let g:ale_pattern_options = {'schema\.rb$': {'ale_enabled': 0, 'ale_fixers': {}}}
 command S Subvert
 " Autocomplete
-autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 set shortmess+=c
 inoremap <c-c> <ESC>
@@ -245,67 +241,20 @@ inoremap <c-c> <ESC>
 " Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Required for operations modifying multiple buffers like rename.
-set hidden
-
-function! LspMaybeHover(is_running) abort
-  if a:is_running.result && g:LanguageClient_autoHoverAndHighlightStatus
-    call LanguageClient_textDocument_hover()
-  endif
+let g:coc_snippet_next = '<tab>'
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-function! LspMaybeHighlight(is_running) abort
-  if a:is_running.result && g:LanguageClient_autoHoverAndHighlightStatus
-    call LanguageClient#textDocument_documentHighlight()
-  endif
-endfunction
-
-augroup lsp_aucommands
-  au!
-  "au CursorHold * call LanguageClient#isAlive(function('LspMaybeHover'))
-  au CursorMoved * call LanguageClient#isAlive(function('LspMaybeHighlight'))
-augroup END
-
-let g:LanguageClient_loggingFile = "/tmp/lunks.log"
-
-let g:LanguageClient_autoHoverAndHighlightStatus = 0
-
-function! ToggleLspAutoHoverAndHilight() abort
-  if g:LanguageClient_autoHoverAndHighlightStatus
-    let g:LanguageClient_autoHoverAndHighlightStatus = 0
-    call LanguageClient#clearDocumentHighlight()
-    echo ""
-  else
-    let g:LanguageClient_autoHoverAndHighlightStatus = 1
-  end
-endfunction
-nnoremap <silent> ;tg  :call ToggleLspAutoHoverAndHilight()<CR>
-
-let g:LanguageClient_serverCommands = {
-  \ 'javascript.jsx': ['javascript-typescript-stdio'],
-  \ 'typescript.jsx': ['javascript-typescript-stdio'],
-  \ 'typescript': ['javascript-typescript-stdio']
-  \ }
-nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
-nnoremap <silent> <leader>la :call LanguageClient#textDocument_codeAction()<CR>
-nnoremap <silent> <leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
-nnoremap <silent> <leader>lS :call LanguageClient#workspace_symbol()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-let g:LanguageClient_completionPreferTextEdit = 1
-" c-j c-k for moving in snippet
-imap <expr> <c-u> ncm2_ultisnips#expand_or("\<Plug>(ultisnips_expand)", 'm')
-smap <c-u> <Plug>(ultisnips_expand)
-let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
-
-augroup LanguageClient_config
-  autocmd!
-  autocmd User LanguageClientStarted echo "LC started!"
-  autocmd User LanguageClientStopped echo "LC stopped!"
-augroup END
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 
 map <leader>rc :silent !tmux send-keys -t bottom C-c<CR>
 
@@ -324,3 +273,8 @@ augroup Binary
 augroup END
 :set wildoptions=pum
 :set pumblend=20
+
+nnoremap <leader>f :CocAction<CR>
+nnoremap [w :ALEPreviousWrap<CR>
+nnoremap ]w :ALENextWrap<CR>
+nmap gd <Plug>(coc-definition) 
