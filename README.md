@@ -1,21 +1,26 @@
 Installation
 ============
 
+This is for neovim only.
+
 Clone the repo:
-`git clone https://github.com/lunks/vimfiles.git ~/.vim`
+`git clone https://github.com/lunks/vimfiles.git ~/.config/nvim`
 
 Grab vim-plug:
-```
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+
+```sh
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
 
-Symlink everything so neovim finds it:
-```
-ln -s ~/.vim/vimrc ~/.vimrc`
-ln -s ~/.vim ~/.config/nvim
-ln -s ~/.vimrc ~/.config/nvim/init.vim
+Install fzf:
+
+```sh
+$ brew install fzf
 ```
 
 Install plugins:
-`nvim +PlugInstall +qall`
+
+```sh
+nvim +PlugInstall +qall
+```
