@@ -142,17 +142,10 @@ return {
       elixir.setup {
         nextls = {
           enable = true,
-          init_options = {
-            experimental = {
-              completions = {
-                enable = true
-              }
-            }
-          }
         },
-        credo = { enable = true },
         elixirls = {
           enable = true,
+          tag = "v0.21.3",
           settings = elixirls.settings {
             dialyzerEnabled = true,
             enableTestLenses = true,
