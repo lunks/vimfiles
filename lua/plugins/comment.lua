@@ -10,9 +10,5 @@ return {
       },
     },
     cmd = 'CommentToggle',
-    config = function()
-      local comment = require 'nvim_comment'
-      comment.setup {}
-    end
   },
 }

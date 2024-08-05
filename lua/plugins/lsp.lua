@@ -2,14 +2,9 @@ return {
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
-    'folke/neodev.nvim',
-    config = function()
-      require("neodev").setup({
+    {
+      'folke/neodev.nvim',
+      opts = {
         library = {
           enabled = true,
           runtime = true,
@@ -19,8 +14,9 @@ return {
         setup_jsonls = true,
         lspconfig = true,
         pathStrict = true,
-      })
-    end
+
+      }
+    },
   },
   {
     'aznhe21/actions-preview.nvim',
@@ -61,7 +57,6 @@ return {
   },
   {
     'neovim/nvim-lspconfig',
-    keys = { 'gd' },
     dependencies = { 'lukas-reineke/lsp-format.nvim' },
     config = function()
       local lspconfig = require 'lspconfig'
@@ -126,14 +121,12 @@ return {
   },
   {
     "rshkarin/mason-nvim-lint",
-    config = function()
-      require 'mason-nvim-lint'.setup({ quiet_mode = true })
-    end,
+    opts = { quiet_mode = true }
   },
   {
     "elixir-tools/elixir-tools.nvim",
     version = "*",
-    filetypes = { "elixir", "heex" },
+    ft = { "elixir", "heex" },
     config = function()
       local elixir = require("elixir")
       local elixirls = require("elixir.elixirls")
@@ -145,7 +138,7 @@ return {
         },
         elixirls = {
           enable = true,
-          tag = "v0.21.3",
+          tag = "v0.22.1",
           settings = elixirls.settings {
             dialyzerEnabled = true,
             enableTestLenses = true,
