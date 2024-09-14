@@ -1,4 +1,7 @@
-vim.keymap.set('n', '<Leader>e', ':e ' .. vim.fn.expand('%:p:h') .. '/')
+vim.keymap.set('n', '<Leader>e', function()
+  vim.api.nvim_feedkeys(':e ' .. vim.fn.expand('%:p:h') .. '/', 'n', false)
+end)
+
 vim.keymap.set('n', '//', ':nohlsearch<CR>')
 
 vim.keymap.set('n', 'j', function() return vim.v.count == 0 and 'gj' or 'j' end,
