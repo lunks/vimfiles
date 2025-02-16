@@ -3,11 +3,11 @@ vim.g.mapleader = ','
 vim.opt.eventignore:append("FocusLost")
 vim.o.wildmode = 'longest,list:longest,full'
 vim.o.clipboard = 'unnamedplus'
-vim.o.expandtab = true
 vim.o.shell = 'zsh'
 vim.o.shiftround = true
 vim.o.shiftwidth = 2
-vim.o.softtabstop = 2
+vim.o.tabstop = 2
+vim.o.expandtab = true
 vim.o.splitright = true
 vim.o.smartcase = true
 vim.o.ignorecase = true
