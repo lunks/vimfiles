@@ -22,6 +22,7 @@ vim.g.python3_host_prog = '/usr/bin/python3'
 vim.o.cursorline = true
 vim.o.colorcolumn = '80'
 vim.o.cmdheight = 2
+vim.o.laststatus = 3
 vim.o.scrolloff = 5
 vim.opt.listchars = {
   trail = '·',

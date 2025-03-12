@@ -2,21 +2,22 @@ return {
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    {
-      'folke/neodev.nvim',
-      opts = {
-        library = {
-          enabled = true,
-          runtime = true,
-          plugins = true,
-          types = true,
-        },
-        setup_jsonls = true,
-        lspconfig = true,
-        pathStrict = true,
+    cmd = "Trouble",
+  },
+  {
+    'folke/neodev.nvim',
+    opts = {
+      library = {
+        enabled = true,
+        runtime = true,
+        plugins = true,
+        types = true,
+      },
+      setup_jsonls = true,
+      lspconfig = true,
+      pathStrict = true,
 
-      }
-    },
+    }
   },
   {
     'aznhe21/actions-preview.nvim',
@@ -101,7 +102,8 @@ return {
             on_attach = on_attach,
             settings = { pyright = {
               -- Using Ruff's import organizer
-              disableOrganizeImports = true
+              disableOrganizeImports = true,
+              strictOptional = true
             },
               basedpyright = {
                 analysis = {
@@ -134,7 +136,7 @@ return {
     config = function()
       local lint = require("lint")
       lint.linters_by_ft = {
-        python = { "ruff", "mypy" },
+        python = { "ruff" },
         json = { "jsonlint" },
         dockerfile = { "hadolint" },
         terraform = { "tflint" },
@@ -196,14 +198,6 @@ return {
         expr = true,
         replace_keycodes = false
       })
-      vim.keymap.set('i', '<F6>', 'copilot#Previous()', {
-        expr = true,
-        replace_keycodes = false
-      })
-      vim.keymap.set('i', '<F7>', 'copilot#Next()', {
-        expr = true,
-        replace_keycodes = false
-      })
       vim.g.copilot_no_tab_map = true
     end
   },
@@ -218,7 +212,7 @@ return {
     build = "make tiktoken",
     opts = {
       --debug = true, -- Enable debugging
-      model = "claude-3.5-sonnet",
+      model = "claude-3.7-sonnet-thought",
       show_folds = false
     },
     config = function(_, opts)
@@ -380,4 +374,46 @@ If response would be too long:
       },
     }
   },
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+
+    version = false,
+    opts = {
+      provider = "copilot",
+      cursor_applying_provider = "copilot",
+      auto_suggestion_provider = nil,
+      copilot = {
+        model = "claude-3.7-sonnet",
+      },
+      behaviour = {
+        enable_cursor_planning_mode = true,
+        auto_suggestions = false,
+        auto_set_highlight_group = true,
+        auto_apply_diff_after_generation = true,
+      },
+      windows = {
+        ask = {
+          start_insert = false,
+        },
+      },
+    },
+    build = "make",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      {
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { "Avante" },
+        },
+        ft = { "Avante" },
+      },
+    },
+    keys = {
+      { "<F7>", function() require("avante").toggle() end, mode = { "n", "i" }, desc = "Toggle Avante" },
+    },
+  }
 }
